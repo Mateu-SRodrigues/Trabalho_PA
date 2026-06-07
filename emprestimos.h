@@ -10,7 +10,7 @@ typedef struct {
     char data_prevista[11];     
     char data_devolucao[11];    
     int devolvido;              
-                                
+                               
 
 } Emprestimo;
 
