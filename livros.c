@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "livros.h"
+#include "emprestimos.h"
 
 Livro livros[100];
 int totalLivros = 0;
@@ -61,5 +62,181 @@ void listarLivros() {
         printf("Disponiveis: %d\n", livros[i].qtd_disponivel);
         printf("Total de Emprestimos: %d\n", livros[i].total_emprestimos);
     }
+
+}
+
+void mostrarUsuariosDoLivro() {
+
+    int codigo;
+    int encontrou = 0;
+
+    printf("\n===== USUARIOS COM ESTE LIVRO =====\n");
+
+    printf("Digite o codigo do livro: ");
+    scanf("%d", &codigo);
+
+    for(int i = 0; i < totalEmprestimos; i++) {
+
+        if(emprestimos[i].codigo_livro == codigo &&
+           emprestimos[i].devolvido == 0) {
+
+            encontrou = 1;
+
+            printf("Matricula do usuario: %d\n",
+                   emprestimos[i].matricula_usuario);
+        }
+    }
+
+    if(encontrou == 0) {
+
+        printf("Este livro nao possui emprestimos ativos.\n");
+    }
+}
+
+void buscarLivroPorCodigo() {
+
+    int codigo;
+    int encontrou = 0;
+
+    printf("Digite o codigo do livro: ");
+    scanf("%d", &codigo);
+
+    for(int i = 0; i < totalLivros; i++) {
+
+        if(livros[i].codigo == codigo) {
+
+            encontrou = 1;
+
+            // mostrar todos os dados do livro
+            printf("\nCodigo: %d\n", livros[i].codigo);
+            printf("Titulo: %s\n", livros[i].titulo);
+            printf("Autor: %s\n", livros[i].autor);
+            printf("Genero: %s\n", livros[i].genero);
+            printf("Ano: %d\n", livros[i].ano);
+            printf("Quantidade Total: %d\n", livros[i].qtd_total);
+            printf("Disponiveis: %d\n", livros[i].qtd_disponivel);
+            printf("Total Emprestimos: %d\n", livros[i].total_emprestimos);
+
+            break;
+        }
+    }
+
+    if(encontrou == 0) {
+        printf("Livro nao encontrado!\n");
+    }
+}
+
+void buscarLivroPorTitulo() {
+
+    char busca[100];
+    int encontrou = 0;
+
+    getchar();
+
+    printf("Digite parte do titulo: ");
+    fgets(busca, 100, stdin);
+
+    busca[strcspn(busca, "\n")] = '\0';
+
+    for(int i = 0; i < totalLivros; i++) {
+
+        if(strstr(livros[i].titulo, busca) != NULL) {
+
+            encontrou = 1;
+
+            // mostrar livro
+            printf("\nCodigo: %d\n", livros[i].codigo);
+            printf("Titulo: %s\n", livros[i].titulo);
+            printf("Autor: %s\n", livros[i].autor);
+            printf("----------------------\n");
+        }
+    }
+
+    if(encontrou == 0) {
+
+        printf("Nenhum livro encontrado.\n");
+    }
+}
+
+int buscarIndiceLivroPorCodigo(int codigo) {
+
+    for(int i = 0; i < totalLivros; i++) {
+
+        if(livros[i].codigo == codigo) {
+
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+void atualizarLivro() {
+
+    int codigo;
+
+    printf("Digite o codigo do livro: ");
+    scanf("%d", &codigo);
+
+    int pos = buscarIndiceLivroPorCodigo(codigo);
+
+    if(pos == -1) {
+
+        printf("Livro nao encontrado!\n");
+        return;
+    }
+    // pedir novos dados
+    getchar();
+    printf("Novo titulo: ");
+    fgets(livros[pos].titulo, 100, stdin);
+    livros[pos].titulo[strcspn(livros[pos].titulo, "\n")] = '\0';
+
+    printf("Novo autor: ");
+    fgets(livros[pos].autor, 100, stdin);
+    livros[pos].autor[strcspn(livros[pos].autor, "\n")] = '\0';
+
+    printf("Novo genero: ");
+    fgets(livros[pos].genero, 50, stdin);
+    livros[pos].genero[strcspn(livros[pos].genero, "\n")] = '\0';
+
+    printf("Novo ano: ");
+    scanf("%d", &livros[pos].ano);
+
+    printf("Nova quantidade total: ");
+    scanf("%d", &livros[pos].qtd_total);
+    livros[pos].qtd_disponivel = livros[pos].qtd_total;
+
+    printf("Livro atualizado com sucesso!\n");
+
+}
+
+void removerLivro() {
+
+    int codigo;
+
+    printf("Digite o codigo do livro: ");
+    scanf("%d", &codigo);
+
+    int pos = buscarIndiceLivroPorCodigo(codigo);
+
+    if(pos == -1) {
+
+        printf("Livro nao encontrado!\n");
+        return;
+    }
+
+    if(livros[pos].qtd_disponivel != livros[pos].qtd_total) {
+
+    printf("Nao e possivel remover. Existem exemplares emprestados.\n");
+    return;
+    }
+
+    for(int i = pos; i < totalLivros - 1; i++) {
+
+    livros[i] = livros[i + 1];
+    }
+
+    totalLivros--;
+    printf("Livro removido com sucesso!\n");
 
 }
