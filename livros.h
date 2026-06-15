@@ -14,5 +14,11 @@ typedef struct {
 
 void cadastrarLivro();
 void listarLivros();
+void mostrarUsuariosDoLivro();
+void buscarLivroPorCodigo();
+void buscarLivroPorTitulo();
+int buscarIndiceLivroPorCodigo(int codigo);
+void atualizarLivro();
+void removerLivro();
 
 #endif
