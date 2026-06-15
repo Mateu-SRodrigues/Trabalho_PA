@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "recuperar_e_salvar.h"
 
-#salvar livros
+//salvar livros
 
 void salvarLivros(Livro livros[], int qtd)
 {
@@ -28,7 +28,7 @@ void salvarLivros(Livro livros[], int qtd)
     fclose(arq);
 }
 
-#carregar livros
+//carregar livros
 
 int carregarLivros(Livro livros[])
 {
