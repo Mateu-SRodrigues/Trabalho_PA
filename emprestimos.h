@@ -3,14 +3,13 @@
 
 typedef struct {
 
-    int id;                     
-    int matricula_usuario;      
-    int codigo_livro;           
-    char data_retirada[11];     
-    char data_prevista[11];     
-    char data_devolucao[11];    
-    int devolvido;              
-                               
+    int id;
+    int matricula_usuario;
+    int codigo_livro;
+    char data_retirada[11];
+    char data_prevista[11];
+    char data_devolucao[11];
+    int devolvido;
 
 } Emprestimo;
 
