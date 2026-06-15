@@ -1,5 +1,5 @@
-#ifndef RECUPERAR_H
-#define RECUPERAR_H
+#ifndef RECUPERAR_E_SALVAR_H
+#define RECUPERAR_E_SALVAR_H
 
 #include "estruturas.h"
 
