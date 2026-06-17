@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include "livros.h"
+#include "emprestimos.h"
 
 static void selectionSortLivros(Livro livros[], int n)
 {
