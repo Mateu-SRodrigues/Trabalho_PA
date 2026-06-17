@@ -5,35 +5,77 @@
 #include "emprestimos.h"
 #include "livros.h"
 
-// Vetor de empréstimos.
-
+/* Vetor de empréstimos. */
 Emprestimo emprestimos[1000];
 
-// Quantidade atual de empréstimos.
-
+/* Quantidade atual de emprestismos. */
 int totalEmprestimos = 0;
 
-// Gera a data atual.
+/* Menu de empréstimos. */
+void menuEmprestimos()
+{
+    int opcao;
 
-void gerarDataAtual(char data[]) {
+    do
+    {
+        printf("\n===== GERENCIAMENTO DE EMPRESTIMOS =====\n");
+        printf("1 - Realizar emprestimo\n");
+        printf("2 - Registrar devolucao\n");
+        printf("3 - Listar emprestimos\n");
+        printf("4 - Listar emprestimos atrasados\n");
+        printf("0 - Voltar\n");
 
+        printf("Escolha uma opcao: ");
+        scanf("%d", &opcao);
+
+        switch(opcao)
+        {
+            case 1:
+                realizarEmprestimo();
+                break;
+
+            case 2:
+                registrarDevolucao();
+                break;
+
+            case 3:
+                listarEmprestimos();
+                break;
+
+            case 4:
+                listarEmprestimosAtrasados();
+                break;
+
+            case 0:
+                printf("Voltando...\n");
+                break;
+
+            default:
+                printf("Opcao invalida!\n");
+        }
+
+    } while(opcao != 0);
+}
+
+/* Gera data atual */
+void gerarDataAtual(char data[])
+{
     time_t t = time(NULL);
 
     struct tm tm = *localtime(&t);
 
     sprintf(
         data,
-        "%02d/%02d/%d",
+        "%02d/%02d/%04d",
         tm.tm_mday,
         tm.tm_mon + 1,
         tm.tm_year + 1900
     );
 }
 
-// Gera data prevista (+14 dias).
-
-void gerarDataPrevista(char data[]) {
-
+/* Gera prazo de devolução (+14 dias) */
+void gerarDataPrevista(char data[])
+{
     time_t t = time(NULL);
 
     t += 14 * 24 * 60 * 60;
@@ -42,83 +84,65 @@ void gerarDataPrevista(char data[]) {
 
     sprintf(
         data,
-        "%02d/%02d/%d",
+        "%02d/%02d/%04d",
         tm.tm_mday,
         tm.tm_mon + 1,
         tm.tm_year + 1900
     );
 }
 
-// Realiza um empréstimo.
-
-void realizarEmprestimo() {
-
-    Emprestimo e;
+/* Realizar empréstimo */
+void realizarEmprestimo()
+{
+    Emprestimo novo;
 
     printf("\n===== NOVO EMPRESTIMO =====\n");
 
     printf("Matricula do usuario: ");
-    scanf("%d", &e.matricula_usuario);
+    scanf("%d", &novo.matricula_usuario);
 
     printf("Codigo do livro: ");
-    scanf("%d", &e.codigo_livro);
+    scanf("%d", &novo.codigo_livro);
 
-    // Procura o livro.
-    
     int posLivro =
         buscarIndiceLivroPorCodigo(
-            e.codigo_livro
+            novo.codigo_livro
         );
 
-    if(posLivro == -1) {
-
+    if(posLivro == -1)
+    {
         printf("Livro nao encontrado!\n");
-
         return;
     }
 
-    // Verifica disponibilidade.
-    
-    if(livros[posLivro].qtd_disponivel <= 0) {
-
-        printf(
-            "Nao existem exemplares disponiveis!\n"
-        );
-
+    if(livros[posLivro].qtd_disponivel <= 0)
+    {
+        printf("Nao existem exemplares disponiveis!\n");
         return;
     }
 
-    /*
-        Quando usuarios.c ficar pronto:
-
-        - verificar usuario
-        - verificar limite de 3 livros
-    */
-
-    e.id = totalEmprestimos + 1;
+    novo.id = totalEmprestimos + 1;
 
     gerarDataAtual(
-        e.data_retirada
+        novo.data_retirada
     );
 
     gerarDataPrevista(
-        e.data_prevista
+        novo.data_prevista
     );
 
     strcpy(
-        e.data_devolucao,
+        novo.data_devolucao,
         ""
     );
 
-    e.devolvido = 0;
+    novo.devolvido = 0;
 
-    emprestimos[totalEmprestimos] = e;
+    emprestimos[totalEmprestimos] =
+        novo;
 
     totalEmprestimos++;
 
-    /*
-        Atualiza estoque
-    */
     livros[posLivro]
         .qtd_disponivel--;
 
@@ -131,25 +155,27 @@ void realizarEmprestimo() {
 
     printf(
         "Data retirada: %s\n",
-        e.data_retirada
+        novo.data_retirada
     );
 
     printf(
         "Data prevista: %s\n",
-        e.data_prevista
+        novo.data_prevista
     );
 }
 
-
-// Registra devolução.
-
-void registrarDevolucao() {
-
+/* Registrar devolução */
+void registrarDevolucao()
+{
     int id;
 
-    printf("\n===== DEVOLUCAO =====\n");
+    printf(
+        "\n===== DEVOLUCAO =====\n"
+    );
 
-    printf("ID do emprestimo: ");
+    printf(
+        "ID do emprestimo: "
+    );
 
     scanf("%d", &id);
 
@@ -157,17 +183,17 @@ void registrarDevolucao() {
         int i = 0;
         i < totalEmprestimos;
         i++
-    ) {
-
+    )
+    {
         if(
             emprestimos[i].id == id
-        ) {
-
+        )
+        {
             if(
                 emprestimos[i]
-                .devolvido == 1
-            ) {
-
+                .devolvido
+            )
+            {
                 printf(
                     "Livro ja devolvido!\n"
                 );
@@ -181,8 +207,8 @@ void registrarDevolucao() {
                     .codigo_livro
                 );
 
-            if(posLivro != -1) {
-
+            if(posLivro != -1)
+            {
                 livros[posLivro]
                     .qtd_disponivel++;
             }
@@ -208,12 +234,11 @@ void registrarDevolucao() {
     );
 }
 
-// Lista todos os empréstimos.
-
-void listarEmprestimos() {
-
-    if(totalEmprestimos == 0) {
-
+/* Listar todos os empréstimos */
+void listarEmprestimos()
+{
+    if(totalEmprestimos == 0)
+    {
         printf(
             "Nenhum emprestimo cadastrado!\n"
         );
@@ -225,8 +250,8 @@ void listarEmprestimos() {
         int i = 0;
         i < totalEmprestimos;
         i++
-    ) {
-
+    )
+    {
         printf(
             "\nID: %d\n",
             emprestimos[i].id
@@ -259,8 +284,8 @@ void listarEmprestimos() {
         if(
             emprestimos[i]
             .devolvido
-        ) {
-
+        )
+        {
             printf(
                 "Devolucao: %s\n",
                 emprestimos[i]
@@ -271,8 +296,8 @@ void listarEmprestimos() {
                 "Status: DEVOLVIDO\n"
             );
         }
-        else {
-
+        else
+        {
             printf(
                 "Status: EM ABERTO\n"
             );
@@ -280,13 +305,11 @@ void listarEmprestimos() {
     }
 }
 
-
-// Verifica atraso.
-
+/* Verifica se está atrasado */
 int verificarAtraso(
     char dataPrevista[]
-) {
-
+)
+{
     int dia;
     int mes;
     int ano;
@@ -311,24 +334,15 @@ int verificarAtraso(
     time_t agora =
         time(NULL);
 
-    if(
-        difftime(
-            agora,
-            prazo
-        ) > 0
-    ) {
-
-        return 1;
-    }
-
-    return 0;
+    return difftime(
+        agora,
+        prazo
+    ) > 0;
 }
 
-
-// Lista empréstimos atrasados.
-
-void listarEmprestimosAtrasados() {
-
+/* Lista empréstimos atrasados */
+void listarEmprestimosAtrasados()
+{
     int encontrou = 0;
 
     printf(
@@ -339,18 +353,18 @@ void listarEmprestimosAtrasados() {
         int i = 0;
         i < totalEmprestimos;
         i++
-    ) {
-
+    )
+    {
         if(
             emprestimos[i]
-            .devolvido == 0
+                .devolvido == 0
             &&
             verificarAtraso(
                 emprestimos[i]
-                .data_prevista
+                    .data_prevista
             )
-        ) {
-
+        )
+        {
             encontrou = 1;
 
             printf(
@@ -361,25 +375,25 @@ void listarEmprestimosAtrasados() {
             printf(
                 "Usuario: %d\n",
                 emprestimos[i]
-                .matricula_usuario
+                    .matricula_usuario
             );
 
             printf(
                 "Livro: %d\n",
                 emprestimos[i]
-                .codigo_livro
+                    .codigo_livro
             );
 
             printf(
                 "Data prevista: %s\n",
                 emprestimos[i]
-                .data_prevista
+                    .data_prevista
             );
         }
     }
 
-    if(!encontrou) {
-
+    if(!encontrou)
+    {
         printf(
             "Nenhum emprestimo atrasado!\n"
         );
