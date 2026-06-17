@@ -14,8 +14,10 @@ typedef struct {
 } Emprestimo;
 
 extern Emprestimo emprestimos[1000];
+
 extern int totalEmprestimos;
 
+void menuEmprestimos();
 void realizarEmprestimo();
 void registrarDevolucao();
 void listarEmprestimos();
