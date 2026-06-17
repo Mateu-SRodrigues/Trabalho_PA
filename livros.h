@@ -12,6 +12,10 @@ typedef struct {
     int total_emprestimos;
 } Livro;
 
+extern Livro livros[100];
+extern int totalLivros;
+
+void menuLivros();
 void cadastrarLivro();
 void listarLivros();
 void mostrarUsuariosDoLivro();
