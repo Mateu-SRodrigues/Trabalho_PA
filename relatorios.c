@@ -1,28 +1,3 @@
-
-static void selectionSortLivros(Livro livros[], int n)
-{
-    int i, j, maior;
-    Livro aux;
-
-    for(i = 0; i < n - 1; i++)
-    {
-        maior = i;
-
-        for(j = i + 1; j < n; j++)
-        {
-            if(livros[j].total_emprestimos >
-               livros[maior].total_emprestimos)
-            {
-                maior = j;
-            }
-        }
-
-        aux = livros[i];
-        livros[i] = livros[maior];
-        livros[maior] = aux;
-    }
-}
-
 // Livros mais emprestados
 void ordenarLivrosMaisEmprestados(Livro livros[], int n)
 {
