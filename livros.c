@@ -6,6 +6,74 @@
 Livro livros[100];
 int totalLivros = 0;
 
+void menuLivros() {
+
+    int opcao;
+
+    do {
+
+        printf("\n===== MENU LIVROS =====\n");
+
+        printf("1 - Cadastrar Livro\n");
+        printf("2 - Listar Livros\n");
+        printf("3 - Buscar Livro por Codigo\n");
+        printf("4 - Buscar Livro por Titulo\n");
+        printf("5 - Atualizar Livro\n");
+        printf("6 - Remover Livro\n");
+        printf("7 - Mostrar Usuarios com Livro\n");
+        printf("0 - Voltar\n");
+
+        printf("Opcao: ");
+        scanf("%d", &opcao);
+
+        switch(opcao) {
+
+            case 1:
+                /* chamar cadastrarLivro() */
+                cadastrarLivro();
+                break;
+
+            case 2:
+                /* chamar listarLivros() */
+                listarLivros();
+                break;
+
+            case 3:
+                /* chamar buscarLivroPorCodigo() */
+                buscarLivroPorCodigo();
+                break;
+
+            case 4:
+                /* chamar buscarLivroPorTitulo() */
+                buscarLivroPorTitulo();
+                break;
+
+            case 5:
+                /* chamar atualizarLivro() */
+                atualizarLivro();
+                break;
+
+            case 6:
+                /* chamar removerLivro() */
+                removerLivro();
+                break;
+
+            case 7:
+                /* chamar mostrarUsuariosDoLivro() */
+                mostrarUsuariosDoLivro();
+                break;
+
+            case 0:
+                printf("Voltando...\n");
+                break;
+
+            default:
+                printf("Opcao invalida!\n");
+        }
+
+    } while(opcao != 0);
+}
+
 void cadastrarLivro() {
 
     livros[totalLivros].codigo = totalLivros + 1;
@@ -61,6 +129,7 @@ void listarLivros() {
         printf("Quantidade Total: %d\n", livros[i].qtd_total);
         printf("Disponiveis: %d\n", livros[i].qtd_disponivel);
         printf("Total de Emprestimos: %d\n", livros[i].total_emprestimos);
+        printf("-------------------------------\n");
     }
 
 }
@@ -148,7 +217,11 @@ void buscarLivroPorTitulo() {
             printf("\nCodigo: %d\n", livros[i].codigo);
             printf("Titulo: %s\n", livros[i].titulo);
             printf("Autor: %s\n", livros[i].autor);
-            printf("----------------------\n");
+            printf("Genero: %s\n", livros[i].genero);
+            printf("Ano: %d\n", livros[i].ano);
+            printf("Quantidade Total: %d\n", livros[i].qtd_total);
+            printf("Disponiveis: %d\n", livros[i].qtd_disponivel);
+            printf("Total Emprestimos: %d\n", livros[i].total_emprestimos);
         }
     }
 
@@ -185,7 +258,7 @@ void atualizarLivro() {
         printf("Livro nao encontrado!\n");
         return;
     }
-    // pedir novos dados
+
     getchar();
     printf("Novo titulo: ");
     fgets(livros[pos].titulo, 100, stdin);
@@ -207,6 +280,8 @@ void atualizarLivro() {
     livros[pos].qtd_disponivel = livros[pos].qtd_total;
 
     printf("Livro atualizado com sucesso!\n");
+
+    // pedir novos dados
 
 }
 
@@ -240,3 +315,4 @@ void removerLivro() {
     printf("Livro removido com sucesso!\n");
 
 }
+

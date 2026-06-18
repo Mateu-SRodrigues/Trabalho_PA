@@ -12,7 +12,7 @@ void menuPrincipal()
 
     do
     {
-        printf("\n===== BIBLIOTECA =====\n");
+        printf("\n -BIBLIOTECA UECE- \n");
         printf("1 - Gerenciar Livros\n");
         printf("2 - Gerenciar Usuarios\n");
         printf("3 - Realizar Emprestimo\n");
