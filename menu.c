@@ -22,6 +22,7 @@ void menuPrincipal()
         printf("3 - Realizar Emprestimo\n");
         printf("4 - Registrar Devolucao\n");
         printf("5 - Relatorios\n");
+        printf("6 - Recuperar livros\n");
         printf("0 - Sair\n");
         printf("Digite uma opcao: ");
 
