@@ -1,6 +1,53 @@
-#include <stdio.h>
 #include "livros.h"
 #include "emprestimos.h"
+#include "usuarios.h"
+#include <stdio.h>
+#include <string.h>
+
+void menuRelatorios() {
+
+    int opcao;
+
+    do {
+
+        printf("\n===== MENU RELATORIOS =====\n");
+        printf("1 - Acervo Disponivel\n");
+        printf("2 - Livros Mais Emprestados\n");
+        printf("3 - Usuarios em Atraso\n");
+        printf("4 - Historico de Usuario\n");
+        printf("0 - Voltar\n");
+
+        printf("Opcao: ");
+        scanf("%d", &opcao);
+
+        switch(opcao) {
+
+            case 1:
+                relatorio_AcervoDisponivel();
+                break;
+
+            case 2:
+                relatorio_Livros_Mais_Emprestados();
+                break;
+
+            case 3:
+                relatorio_Atrasados();
+                break;
+
+            case 4:
+                historico_Usuario();
+                break;
+
+            case 0:
+                printf("Voltando...\n");
+                break;
+
+            default:
+                printf("Opcao invalida!\n");
+        }
+
+    } while(opcao != 0);
+}
 
 static void selectionSortLivros(Livro livros[], int n)
 {
@@ -27,7 +74,7 @@ static void selectionSortLivros(Livro livros[], int n)
 }
 
 // Livros mais emprestados
-void ordenarLivrosMaisEmprestados(Livro livros[], int n)
+void relatorio_Livros_Mais_Emprestados(Livro livros[], int n)
 {
     int i, j, maior;
     Livro aux;
@@ -52,7 +99,7 @@ void ordenarLivrosMaisEmprestados(Livro livros[], int n)
 }
 
 // Livros disponíveis
-void relatorioAcervoDisponivel(
+void relatorio_AcervoDisponivel(
     Livro livros[],
     int qtdLivros)
 {
@@ -78,7 +125,7 @@ void relatorioAcervoDisponivel(
     fclose(arq);
 }
 // Usuários atrasados
-void relatorioUsuariosAtrasados()
+void relatorio_Atrasados()
 {
     FILE *arq =
         fopen(
@@ -141,7 +188,7 @@ void relatorioUsuariosAtrasados()
 
 // Histórico do Usuário
 
-void relatorioHistoricoUsuario(
+void historico_Usuario(
     int matricula,
     Emprestimo emprestimos[],
     int qtdEmprestimos)
