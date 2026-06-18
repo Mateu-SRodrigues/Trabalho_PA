@@ -9,7 +9,7 @@ void menuRecuperar(Livro livros[], int totalLivros){
     int opcao;
 
     do{
-        printf("\n==================== GERENCIAMENTO DE USUARIOS ====================\n");
+        printf("\n==================== GERENCIAMENTO DE LIVROS ====================\n");
         printf(" 1 - Salvar livros\n");
         printf(" 2 - Carregar livros\n");      
         printf(" 0 - Voltar\n");                
@@ -39,7 +39,7 @@ void menuRecuperar(Livro livros[], int totalLivros){
 
 void salvarLivros(Livro livros[], int totalLivros)
 {
-    FILE *arq = fopen("livros.txt", "w");
+    FILE *arq = fopen("livros.txt", "a");
 
     if(arq == NULL)
         return;
@@ -71,10 +71,8 @@ int carregarLivros(Livro livros[], int totalLivros)
     if(arq == NULL)
         return 0;
 
-    while(
-        fscanf(arq,
+    while((fscanf(arq,
         "%d;%99[^;];%99[^;];%d;%49[^;];%d;%d;%d\n",
-
         &livros[totalLivros].codigo,
         livros[totalLivros].titulo,
         livros[totalLivros].autor,
@@ -82,9 +80,7 @@ int carregarLivros(Livro livros[], int totalLivros)
         livros[totalLivros].genero,
         &livros[totalLivros].qtd_total,
         &livros[totalLivros].qtd_disponivel,
-        &livros[totalLivros].total_emprestimos) == 8
-    )
-    {
+        &livros[totalLivros].total_emprestimos) == 8)){
         totalLivros++;
     }
 
