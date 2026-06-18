@@ -114,25 +114,26 @@ void cadastrarLivro() {
 }
 
 void listarLivros() {
-
-    //verifica se existe algum livro cadastrado
-    if(totalLivros == 0) {
-        printf("Nenhum livro cadastrado!\n");
+    FILE *arq = fopen("livros.txt", "r");
+    if(arq == NULL){
+        printf("Erro na ABERTURA do arquivo.\n");
         return;
     }
-    //esse for vai percorrer o vetor livros e vai mostras os livros cadastrados e mostras o codigo o titulo e etc...
-    for(int i = 0; i < totalLivros; i++) {
-        printf("\nLivro %d\n", i + 1);
-        printf("Codigo: %d\n", livros[i].codigo);
-        printf("Titulo: %s\n", livros[i].titulo);
-        printf("Autor: %s\n", livros[i].autor);
-        printf("Genero: %s\n", livros[i].genero);
-        printf("Ano: %d\n", livros[i].ano);
-        printf("Quantidade Total: %d\n", livros[i].qtd_total);
-        printf("Disponiveis: %d\n", livros[i].qtd_disponivel);
-        printf("Total de Emprestimos: %d\n", livros[i].total_emprestimos);
-        printf("-------------------------------\n");
-    }
+    //Armazena cada linha lida do arquivo
+    char linha[256];
+    //Conta quantas linhas foram armazenadas
+    int encontrado = 0;
+
+    //Lê e armazena o arquivo linha por linha até o EOF(fgets == NULL)
+    while(fgets(linha, sizeof(linha), arq) != NULL){
+            printf("%s", linha);
+            encontrado++;
+        }
+    //Se leu só duas linhas(Cabeçalho) ou menos, não existe cadastros
+    if(encontrado == 0)
+        printf("Nenhum livro cadastrado ainda.");
+
+    fclose(arq);
 
 }
 
