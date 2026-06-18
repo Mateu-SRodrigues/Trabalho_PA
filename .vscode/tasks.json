@@ -7,9 +7,15 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}",
+                "main.c",
+                "livros.c",
+                "usuarios.c",
+                "emprestimo.c",
+                "relatorios.c",
+                "menu.c",
+                "recuperar_e_salvar.c",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "${workspaceFolder}\\main.exe"
             ],
             "options": {
                 "cwd": "${fileDirname}"
