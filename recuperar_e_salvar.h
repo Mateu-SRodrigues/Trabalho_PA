@@ -1,17 +1,16 @@
 #ifndef RECUPERAR_E_SALVAR_H
 #define RECUPERAR_E_SALVAR_H
 
-#include "livros.h";
+#include "livros.h"
 #include "emprestimos.h"
 #include "usuarios.h"
 
-void salvarLivros(Livro livros[], int qtd);
-int carregarLivros(Livro livros[]);
+extern Livro livros[100];
+extern int totalLivros;
 
-void salvarUsuarios(Usuario usuarios[], int qtd);
-int carregarUsuarios(Usuario usuarios[]);
+void menuRecuperar(Livro livros[], int totalLivros);
 
-void salvarEmprestimos(Emprestimo emprestimos[], int qtd);
-int carregarEmprestimos(Emprestimo emprestimos[]);
+void salvarLivros(Livro livros[], int totalLivros);
+int carregarLivros(Livro livros[], int totalLivros);
 
 #endif

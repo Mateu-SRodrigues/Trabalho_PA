@@ -1,16 +1,50 @@
 #include <stdio.h>
 #include "recuperar_e_salvar.h"
+#include "livros.h"
 
-//salvar livros
+extern Livro livros[100];
+extern int totalLivros;
 
-void salvarLivros(Livro livros[], int qtd)
+void menuRecuperar(Livro livros[], int totalLivros){
+    int opcao;
+
+    do{
+        printf("\n==================== GERENCIAMENTO DE USUARIOS ====================\n");
+        printf(" 1 - Salvar livros\n");
+        printf(" 2 - Carregar livros\n");      
+        printf(" 0 - Voltar\n");                
+        printf("Digite uma opcao: ");
+        scanf("%d", &opcao);
+        getchar();
+    
+        switch (opcao){
+            case 1:
+                salvarLivros(
+                    livros, 
+                    totalLivros
+                );
+                break;
+            case 2:
+                carregarLivros(livros, totalLivros);
+                break;
+            case 0:
+                printf("Voltando...");
+                break;
+            default:
+                printf("Opcao invalida! Digite novamente: ");
+                break;
+        }
+    } while (opcao != 0);
+}
+
+void salvarLivros(Livro livros[], int totalLivros)
 {
     FILE *arq = fopen("livros.txt", "w");
 
     if(arq == NULL)
         return;
 
-    for(int i = 0; i < qtd; i++)
+    for(int i = 0; i < totalLivros; i++)
     {
         fprintf(arq,
         "%d;%s;%s;%d;%s;%d;%d;%d\n",
@@ -30,34 +64,32 @@ void salvarLivros(Livro livros[], int qtd)
 
 //carregar livros
 
-int carregarLivros(Livro livros[])
+int carregarLivros(Livro livros[], int totalLivros)
 {
     FILE *arq = fopen("livros.txt", "r");
 
     if(arq == NULL)
         return 0;
 
-    int qtd = 0;
-
     while(
         fscanf(arq,
         "%d;%99[^;];%99[^;];%d;%49[^;];%d;%d;%d\n",
 
-        &livros[qtd].codigo,
-        livros[qtd].titulo,
-        livros[qtd].autor,
-        &livros[qtd].ano,
-        livros[qtd].genero,
-        &livros[qtd].qtd_total,
-        &livros[qtd].qtd_disponivel,
-        &livros[qtd].total_emprestimos) == 8
+        &livros[totalLivros].codigo,
+        livros[totalLivros].titulo,
+        livros[totalLivros].autor,
+        &livros[totalLivros].ano,
+        livros[totalLivros].genero,
+        &livros[totalLivros].qtd_total,
+        &livros[totalLivros].qtd_disponivel,
+        &livros[totalLivros].total_emprestimos) == 8
     )
     {
-        qtd++;
+        totalLivros++;
     }
 
     fclose(arq);
 
-    return qtd;
+    return totalLivros;
 }
 
