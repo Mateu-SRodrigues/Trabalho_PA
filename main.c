@@ -1,8 +1,9 @@
-#include "menu.c"
-#include "livros.c"
-#include "usuarios.c"
-#include "emprestimo.c"
-#include "relatorios.c"
+#include "menu.h"
+#include "livros.h"
+#include "usuarios.h"
+#include "emprestimos.h"
+#include "relatorios.h"
+#include "recuperar_e_salvar.h"
 
 int main()
 {
