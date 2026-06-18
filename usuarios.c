@@ -4,6 +4,7 @@
 #include "usuarios.h"
 
 Usuario usuarios[100];
+int totalUsuarios = 0;
 
 void menuUsuarios(){
     int opcao;
@@ -79,7 +80,6 @@ void cadUsuario(){
     }
     
     //Gera a matrícula automaticamente para o novo usuário
-    int totalUsuarios = 0;
     usuarios[totalUsuarios].matricula = totalUsuarios + 1;
     
     //Lê o nome do usuário e limpa o \n, delimitando o final da string em \0
