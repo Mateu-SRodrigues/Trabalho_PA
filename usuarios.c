@@ -16,7 +16,7 @@ void menuUsuarios(){
         printf(" 4 - Informar os esprestimos ativos do usuario\n");                
         printf(" 5 - Atualizar dados do usuario\n");                
         printf(" 6 - Remover usuario\n");                
-        printf(" 0 - Sair\n");                
+        printf(" 0 - Voltar\n");                
         printf("Digite uma opcao: ");
         scanf("%d", &opcao);
         getchar();
@@ -41,7 +41,7 @@ void menuUsuarios(){
                 removerUsuario();
                 break;
             case 0:
-                printf("Encerrando...");
+                printf("Voltando...");
                 break;
             default:
                 printf("Opcao invalida! Digite novamente: ");
