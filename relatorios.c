@@ -4,6 +4,12 @@
 #include <stdio.h>
 #include <string.h>
 
+extern Livro livros[100];
+extern int totalLivros;
+
+extern Emprestimo emprestimos[1000];
+extern int totalEmprestimos;
+
 void menuRelatorios() {
 
     int opcao;
@@ -23,11 +29,17 @@ void menuRelatorios() {
         switch(opcao) {
 
             case 1:
-                relatorio_AcervoDisponivel();
+                relatorio_AcervoDisponivel(
+                    livros,
+                    totalLivros
+                );
                 break;
 
             case 2:
-                relatorio_Livros_Mais_Emprestados();
+                relatorio_Livros_Mais_Emprestados(
+                    livros,
+                    totalLivros
+                );
                 break;
 
             case 3:
@@ -35,7 +47,16 @@ void menuRelatorios() {
                 break;
 
             case 4:
-                historico_Usuario();
+                int matricula;
+
+                printf("Digite a matricula: ");
+                scanf("%d", &matricula);
+
+                historico_Usuario(
+                    matricula,
+                    emprestimos,
+                    totalEmprestimos
+                );
                 break;
 
             case 0:
@@ -74,28 +95,55 @@ static void selectionSortLivros(Livro livros[], int n)
 }
 
 // Livros mais emprestados
-void relatorio_Livros_Mais_Emprestados(Livro livros[], int n)
+void relatorio_Livros_Mais_Emprestados(
+    Livro livros[],
+    int qtdLivros)
 {
-    int i, j, maior;
-    Livro aux;
+    FILE *arq;
 
-    for(i = 0; i < n - 1; i++)
+    arq = fopen("livros_mais_emprestados.txt", "w");
+
+    if(arq == NULL)
     {
-        maior = i;
-
-        for(j = i + 1; j < n; j++)
-        {
-            if(livros[j].total_emprestimos >
-               livros[maior].total_emprestimos)
-            {
-                maior = j;
-            }
-        }
-
-        aux = livros[i];
-        livros[i] = livros[maior];
-        livros[maior] = aux;
+        printf("Erro ao criar arquivo!\n");
+        return;
     }
+
+    selectionSortLivros(
+        livros,
+        qtdLivros
+    );
+
+    printf("\n===== LIVROS MAIS EMPRESTADOS =====\n");
+
+    fprintf(
+        arq,
+        "===== LIVROS MAIS EMPRESTADOS =====\n"
+    );
+
+    for(int i = 0; i < qtdLivros; i++)
+    {
+        printf(
+            "%d - %s (%d emprestimos)\n",
+            livros[i].codigo,
+            livros[i].titulo,
+            livros[i].total_emprestimos
+        );
+
+        fprintf(
+            arq,
+            "%d - %s (%d emprestimos)\n",
+            livros[i].codigo,
+            livros[i].titulo,
+            livros[i].total_emprestimos
+        );
+    }
+
+    fclose(arq);
+
+    printf(
+        "\nRelatorio salvo em livros_mais_emprestados.txt\n"
+    );
 }
 
 // Livros disponíveis
