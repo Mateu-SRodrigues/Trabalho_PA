@@ -1,3 +1,4 @@
+#include "relatorios.h"
 #include "livros.h"
 #include "emprestimos.h"
 #include "usuarios.h"

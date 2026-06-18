@@ -8,11 +8,11 @@ void menuRelatorios();
 
 void relatorio_AcervoDisponivel(
     Livro livros[],
-    int qtdLivros);
+    int totalLivros);
 
 void relatorio_Livros_Mais_Emprestados(
     Livro livros[],
-    int qtdLivros);
+    int totalLivros);
 
 void relatorio_Atrasados();
 
