@@ -23,6 +23,7 @@ void menuPrincipal()
         printf("4 - Registrar Devolucao\n");
         printf("5 - Relatorios\n");
         printf("6 - Recuperar livros\n");
+        printf("7 - Menu Emprestimos\n");
         printf("0 - Sair\n");
         printf("Digite uma opcao: ");
 
@@ -56,6 +57,9 @@ void menuPrincipal()
                     livros, 
                     totalLivros
                 );
+                break;
+            case 7:
+                menuEmprestimos();
                 break;
 
             case 0:
