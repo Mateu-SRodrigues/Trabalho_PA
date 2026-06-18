@@ -2,6 +2,7 @@
 #include <string.h>
 #include "livros.h"
 #include "emprestimos.h"
+#include "recuperar_e_salvar.h"
 
 Livro livros[100];
 int totalLivros = 0;
