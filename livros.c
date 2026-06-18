@@ -25,6 +25,7 @@ void menuLivros() {
 
         printf("Opcao: ");
         scanf("%d", &opcao);
+        getchar();
 
         switch(opcao) {
 

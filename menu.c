@@ -19,8 +19,10 @@ void menuPrincipal()
         printf("4 - Registrar Devolucao\n");
         printf("5 - Relatorios\n");
         printf("0 - Sair\n");
+        printf("Digite uma opcao: ");
 
         scanf("%d", &opcao);
+        getchar();
 
         switch(opcao)
         {
