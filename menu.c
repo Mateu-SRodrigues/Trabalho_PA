@@ -5,6 +5,10 @@
 #include "usuarios.h"
 #include "emprestimos.h"
 #include "relatorios.h"
+#include "recuperar_e_salvar.h"
+
+extern Livro livros[100];
+extern int totalLivros;
 
 void menuPrincipal()
 {
@@ -44,6 +48,13 @@ void menuPrincipal()
 
             case 5:
                 menuRelatorios();
+                break;
+
+            case 6:
+                menuRecuperar(
+                    livros, 
+                    totalLivros
+                );
                 break;
 
             case 0:
