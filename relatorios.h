@@ -14,11 +14,7 @@ void relatorio_Livros_Mais_Emprestados(
     Livro livros[],
     int qtdLivros);
 
-void relatorio_Atrasados(
-    Usuario usuarios[],
-    int qtdUsuarios,
-    Emprestimo emprestimos[],
-    int qtdEmprestimos);
+void relatorio_Atrasados();
 
 void historico_Usuario(
     int matricula,
